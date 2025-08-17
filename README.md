@@ -1,6 +1,9 @@
-# Welcome to your Expo app 👋
+# Appy Website React Native Wrapper
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a React Native app that wraps any website by displaying it in a WebView. 
+The idea is that the wrapper can provide a native look and feel to the website, 
+without the need to rebuild it. The wrapper can be used to provide native features
+like push notifications, deep linking, and a native navigation experience.
 
 ## Get started
 
@@ -23,28 +26,69 @@ In the output, you'll find options to open the app in a
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+You can start developing by editing the files inside the **app** directory. 
+This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
+## Features
 
-When you're ready, run:
+1. Adds a data attribute to the HTML element `[data-appy-app]` to indicate that 
+   the app is running in a wrapper.
+2. Adds a style tag to the head of the document and providess a rule that can be
+   used to hide elements on the page.
 
-```bash
-npm run reset-project
+   ```
+   html[data-appy-app] [data-appy-hide] {
+       display: none;
+   }
+   ```
+
+   To hide an element, simply add the data attribute `[data-appy-hide]` to the element.
+
+## Links within the website
+The WebView component intercepts links within the website and provides a
+native navigation experience. By default it pushes the new page onto the
+navigation stack but you can provide a data attribute `[data-appy-modal]` to 
+the link to open the link in a modal instead.
+
+The links are intercepted by attaching a `click` event listener to the document
+and checking if the clicked element is a link:
+
+```javascript
+document.addEventListener('click', (event) => {
+  event.preventDefault();
+}
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Logging inside the website
 
-## Learn more
+The wrapper overrides the `console.log` function to send logs to the React Native app
+via the `postMessage` API. You can use the `console.log` function and it's siblings 
+(e.g. warn, error etc) inside the website to log messages that will be displayed 
+in the React Native app.
 
-To learn more about developing your project with Expo, look at the following resources:
+## OnMessage handler
+The WebView component has an `onMessage` handler that can be used to
+receive messages from the website. The messages are sent using the `postMessage` API.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Messages should be in the following format:
 
-## Join the community
+```json
+{
+  "type": "message_type",
+  "data": {
+    // data specific to the message type
+  }
+}
+```
 
-Join our community of developers creating universal apps.
+For example to navigate to a new page:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```json
+{
+  "type": "navigation",
+  "data": {
+    "isModal": false,
+    "href": "https://example.com/new-page"
+  }
+}
+```
