@@ -16,7 +16,7 @@ like push notifications, deep linking, and a native navigation experience.
 2. Start the app
 
    ```bash
-   npx expo start
+   npm run start
    ```
 
 In the output, you'll find options to open the app in a

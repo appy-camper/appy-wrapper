@@ -1,8 +1,4 @@
-const css = `
-  html[data-appy-app] [data-appy-hide] {
-    display: none;
-  }
-`;
+import { css } from "@/config/css.js";
 
 const setupLogging = `
   const consoleLog = (level, message) => {
