@@ -1,5 +1,7 @@
 import { css } from "@/config/css.js";
 
+export const baseUrl = "https://salt-pepper.no";
+
 const setupLogging = `
   const consoleLog = (level, message) => {
     const logMessage = JSON.stringify({
@@ -34,6 +36,11 @@ export const injectedJs = `(function() {
     const css = document.createTextNode(\`${css}\`);
     style.appendChild(css);
     head.appendChild(style);
+
+    const meta = document.createElement('meta');
+    meta.name = 'viewport';
+    meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+    head.appendChild(meta);
   });
 
   document.addEventListener('click', (e) => {    

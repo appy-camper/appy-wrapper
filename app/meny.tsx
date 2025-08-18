@@ -1,19 +1,15 @@
 import { useOnMessage } from "@/hooks/useOnMessage";
 import { injectedJs } from "@/utils/constants.ts";
-import { fromBase64 } from "@/utils/encoding.ts";
-import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { WebView } from "react-native-webview";
+import { baseUrl } from "../utils/constants.ts";
 
-export default function Modal() {
-  const { slug } = useLocalSearchParams();
-
-  const decodedSlug = fromBase64(slug);
+export default function Meny() {
   const onMessage = useOnMessage();
 
   return (
     <WebView
-      source={{ uri: decodedSlug }}
+      source={{ uri: `${baseUrl}/menu.php` }}
       injectedJavaScriptBeforeContentLoaded={injectedJs}
       style={{ backgroundColor: "black" }}
       onMessage={onMessage}

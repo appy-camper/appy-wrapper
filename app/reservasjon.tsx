@@ -1,19 +1,16 @@
 import { useOnMessage } from "@/hooks/useOnMessage";
 import { injectedJs } from "@/utils/constants.ts";
-import { fromBase64 } from "@/utils/encoding.ts";
-import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { WebView } from "react-native-webview";
 
-export default function Modal() {
-  const { slug } = useLocalSearchParams();
-
-  const decodedSlug = fromBase64(slug);
+export default function Reservasjon() {
   const onMessage = useOnMessage();
 
   return (
     <WebView
-      source={{ uri: decodedSlug }}
+      source={{
+        uri: "https://booking.resdiary.com/widget/Standard/SaltPepperHonefoss/785",
+      }}
       injectedJavaScriptBeforeContentLoaded={injectedJs}
       style={{ backgroundColor: "black" }}
       onMessage={onMessage}

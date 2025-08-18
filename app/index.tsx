@@ -10,7 +10,9 @@ export default function Index() {
     <WebView
       source={{ uri: "https://salt-pepper.no" }}
       injectedJavaScriptBeforeContentLoaded={injectedJs}
+      style={{ backgroundColor: "black" }}
       onMessage={onMessage}
+      hideKeyboardAccessoryView={true}
     />
   );
 }

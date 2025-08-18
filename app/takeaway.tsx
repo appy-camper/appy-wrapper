@@ -1,20 +1,20 @@
 import { useOnMessage } from "@/hooks/useOnMessage";
 import { injectedJs } from "@/utils/constants.ts";
-import { fromBase64 } from "@/utils/encoding.ts";
-import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { WebView } from "react-native-webview";
 
-export default function Screen() {
-  const { slug } = useLocalSearchParams();
-  const decodedSlug = fromBase64(slug);
+export default function Takeaway() {
   const onMessage = useOnMessage();
 
   return (
     <WebView
-      source={{ uri: decodedSlug }}
+      source={{
+        uri: "https://salthonefoss.munu.shop/articles/r200072923-salt-og-pepper-honefoss-takeaway--o200011064-take-away-nett",
+      }}
       injectedJavaScriptBeforeContentLoaded={injectedJs}
+      style={{ backgroundColor: "black" }}
       onMessage={onMessage}
+      hideKeyboardAccessoryView={true}
     />
   );
 }

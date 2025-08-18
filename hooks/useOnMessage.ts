@@ -19,7 +19,7 @@ export function useOnMessage() {
             params: { slug: urlInBase64 },
           });
         } else {
-          router.push(`screens/${urlInBase64}`);
+          router.push(`/${urlInBase64}`);
         }
         break;
       case "log":
