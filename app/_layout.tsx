@@ -3,6 +3,16 @@ import { Drawer } from "expo-router/drawer";
 import React from "react";
 import DrawerContent from "@/components/DrawerContent";
 import { useFonts } from "expo-font";
+import { NotificationProvider } from "@/context/NotificationContext.tsx";
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 export default function RootLayout() {
   useFonts({
@@ -12,18 +22,20 @@ export default function RootLayout() {
   });
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Drawer
-        drawerContent={DrawerContent}
-        screenOptions={{
-          drawerPosition: "right",
-          headerShown: false,
-          drawerStyle: {
-            backgroundColor: "black",
-            width: 240,
-          },
-        }}
-      ></Drawer>
-    </GestureHandlerRootView>
+    <NotificationProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Drawer
+          drawerContent={DrawerContent}
+          screenOptions={{
+            drawerPosition: "right",
+            headerShown: false,
+            drawerStyle: {
+              backgroundColor: "black",
+              width: 240,
+            },
+          }}
+        ></Drawer>
+      </GestureHandlerRootView>
+    </NotificationProvider>
   );
 }
