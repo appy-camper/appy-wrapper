@@ -1,32 +1,30 @@
 import { useRouter } from "expo-router";
-import { toBase64 } from "@/utils/encoding.ts";
+import { toBase64Url } from "@/utils/encoding.ts";
 
 export function useOnMessage() {
   const router = useRouter();
 
   return (event: any) => {
-    console.log("Message from WebView:", event.nativeEvent.data);
+    const { action, payload } = JSON.parse(event.nativeEvent.data);
 
-    const { type, data } = JSON.parse(event.nativeEvent.data);
-
-    switch (type) {
+    switch (action) {
       case "navigation":
-        const urlInBase64 = data.href ? toBase64(data.href) : "";
+        const urlInBase64 = payload.href ? toBase64Url(payload.href) : "";
 
-        if (data.isModal) {
+        if (payload.isModal) {
           router.push({
-            pathname: "modal",
+            pathname: "/(stacks)/modal",
             params: { slug: urlInBase64 },
           });
         } else {
-          router.push(`/${urlInBase64}`);
+          router.push(`/(stacks)/${urlInBase64}`);
         }
         break;
       case "log":
-        console.log("Message from WebView console", data.level, data.log);
+        console.log(`[${payload.level}]`, payload.message);
         break;
       default:
-        console.warn("Unknown type:", type);
+        console.warn("Unknown action:", action);
     }
   };
 }

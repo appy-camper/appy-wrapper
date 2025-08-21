@@ -5,8 +5,8 @@ export const baseUrl = "https://salt-pepper.no";
 const setupLogging = `
   const consoleLog = (level, message) => {
     const logMessage = JSON.stringify({
-      'type': 'log',
-      'data': {
+      'action': 'log',
+      'payload': {
         level, 
         message
       }
@@ -36,30 +36,25 @@ export const injectedJs = `(function() {
     const css = document.createTextNode(\`${css}\`);
     style.appendChild(css);
     head.appendChild(style);
-
-    const meta = document.createElement('meta');
-    meta.name = 'viewport';
-    meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
-    head.appendChild(meta);
   });
 
   document.addEventListener('click', (e) => {    
-    e.preventDefault();
-
     const target = e.target.closest('a');    
     
     if (!target) { return }
 
+    e.preventDefault();
+
     const isModal = target.hasAttribute('data-appy-modal')
 
     window.ReactNativeWebView.postMessage(JSON.stringify({
-      type: 'navigation',
-      data: {
+      action: 'navigation',
+      payload: {
         isModal,
         href: target.href
       }
     }));
 
     return false;
-  })
+  }, true)
 })();`;
