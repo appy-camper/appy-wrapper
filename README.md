@@ -74,9 +74,9 @@ Messages should be in the following format:
 
 ```json
 {
-  "type": "message_type",
-  "data": {
-    // data specific to the message type
+  "action": "action to take",
+  "payload": {
+    // data specific to the action
   }
 }
 ```
@@ -85,8 +85,8 @@ For example to navigate to a new page:
 
 ```json
 {
-  "type": "navigation",
-  "data": {
+  "action": "navigation",
+  "payload": {
     "isModal": false,
     "href": "https://example.com/new-page"
   }
