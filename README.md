@@ -92,3 +92,7 @@ For example to navigate to a new page:
   }
 }
 ```
+
+## Push notifications
+This project makes use of [Expo Push Notifications](https://docs.expo.dev/push-notifications/overview/)
+and follows the steps in this youtube tutorial: [Expo Notifications with EAS | Complete Guide](https://www.youtube.com/watch?v=BCCjGtKtBjE).
